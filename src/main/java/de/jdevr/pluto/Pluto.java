@@ -3,10 +3,7 @@ package de.jdevr.pluto;
 import de.jdevr.pluto.commands.CreateWorldCommand;
 import de.jdevr.pluto.commands.DeleteWorldCommand;
 import de.jdevr.pluto.commands.TeleportWorldCommand;
-import de.jdevr.pluto.listeners.ChatListener;
-import de.jdevr.pluto.listeners.JoinListener;
-import de.jdevr.pluto.listeners.ProtectHubListener;
-import de.jdevr.pluto.listeners.QuitListener;
+import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +33,7 @@ public final class Pluto extends JavaPlugin {
         pluginManager.registerEvents(new QuitListener(), this);
         pluginManager.registerEvents(new ProtectHubListener(), this);
         pluginManager.registerEvents(new ChatListener(), this);
+        pluginManager.registerEvents(new ServerPingListener(), this);
     }
 
     private void CommandRegistration() {

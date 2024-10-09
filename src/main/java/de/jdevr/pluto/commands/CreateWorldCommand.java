@@ -1,6 +1,7 @@
 package de.jdevr.pluto.commands;
 
 import de.jdevr.pluto.WorldUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.WorldType;
@@ -26,23 +27,25 @@ public class CreateWorldCommand implements CommandExecutor {
 
         WorldType worldType;
         switch (args[1].toLowerCase()) {
-            case "flat": worldType = WorldType.FLAT;
-            case "amplified": worldType = WorldType.AMPLIFIED;
-            case "normal": worldType = WorldType.NORMAL;
-            case "large": worldType = WorldType.LARGE_BIOMES;
+            case "flat": worldType = WorldType.FLAT; break;
+            case "amplified": worldType = WorldType.AMPLIFIED; break;
+            case "normal": worldType = WorldType.NORMAL; break;
+            case "large": worldType = WorldType.LARGE_BIOMES; break;
             default: {
                 sender.sendMessage(ChatColor.DARK_RED + "Ungültiger Wert! Falle auf 'normal' zurück..");
                 worldType = WorldType.NORMAL;
+                break;
             }
         }
 
         boolean generateStructures;
         switch (args[2].toLowerCase()) {
-            case "true": generateStructures = true;
-            case "false": generateStructures = false;
+            case "true": generateStructures = true; break;
+            case "false": generateStructures = false; break;
             default: {
                 sender.sendMessage(ChatColor.DARK_RED + "Ungültiger Wert! Muss entweder 'true' oder 'false' sein. Falle auf 'true' zurück..");
                 generateStructures = true;
+                break;
             }
         }
 

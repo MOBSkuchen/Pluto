@@ -1,5 +1,5 @@
 name: pluto
-version: '1.0-SNAPSHOT'
+version: '1.0'
 main: de.jdevr.pluto.Pluto
 api-version: '1.21'
 commands:
@@ -8,8 +8,13 @@ commands:
     permission: permissions.modworlds
   tpworld:
     description: Teleportiert den Spieler auf eine Welt
-    permission: permissions.tp
+    permission: permissions.tpworld
   deleteworld:
     description: Löscht eine Welt
     permission: permissions.modworld
 permissions:
+  permissions.modworld:
+    description: Erlaubt das modifizieren von Welten
+    default: op
+    children:
+      permissions.tpworld: true

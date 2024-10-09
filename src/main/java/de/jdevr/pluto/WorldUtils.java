@@ -6,7 +6,13 @@ import org.bukkit.entity.Player;
 import java.io.File;
 
 public class WorldUtils {
-    public static World hubWorld = Bukkit.getWorld("hub");
+    public static World hubWorld = getHubWorld();
+
+    public static World getHubWorld() {
+        if (WorldExists("hub")) return Bukkit.getWorld("hub");
+        return CreateWorld("hub", false, WorldType.FLAT);
+    }
+
     public static void TeleportPlayerToWorld(Player player, World world) {
         player.teleport(world.getSpawnLocation());
     }

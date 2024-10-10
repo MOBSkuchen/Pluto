@@ -35,6 +35,7 @@ public final class Pluto extends JavaPlugin {
         pluginManager.registerEvents(new ChatListener(), this);
         pluginManager.registerEvents(new ServerPingListener(), this);
         pluginManager.registerEvents(new DeathListener(), this);
+        pluginManager.registerEvents(new InteractionEventListener(), this);
     }
 
     private void CommandRegistration() {

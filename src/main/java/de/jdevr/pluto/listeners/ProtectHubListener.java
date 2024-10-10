@@ -17,6 +17,7 @@ public class ProtectHubListener implements Listener {
 
     @EventHandler
     public void onBlock(BlockBreakEvent event) {
+        if (event.getPlayer().isOp()) return;
         if (event.getBlock().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "Du kannst in dieser Welt nichts zerstören!");
@@ -25,6 +26,7 @@ public class ProtectHubListener implements Listener {
 
     @EventHandler
     public void onCanBuild(BlockCanBuildEvent event) {
+        if (event.getPlayer().isOp()) return;
         if (event.getBlock().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
             event.setBuildable(false);
             event.getPlayer().sendMessage(ChatColor.RED + "Du kannst in dieser Welt nicht bauen!");

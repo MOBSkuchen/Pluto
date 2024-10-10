@@ -8,6 +8,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class DeathListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        event.setDeathMessage(ChatColor.RED + event.getEntity().getDisplayName() + ChatColor.WHITE + " got rekt by " + ChatColor.GOLD + event.getDamageSource().getCausingEntity().getName());
+        String cause;
+        if (event.getDamageSource().getCausingEntity() != null) {
+            cause = event.getDamageSource().getCausingEntity().getName();
+        } else {
+            cause = "skill issues";
+        }
+        event.setDeathMessage(ChatColor.RED + event.getEntity().getDisplayName() + ChatColor.WHITE + " got rekt due to " + ChatColor.GOLD + cause);
     }
 }

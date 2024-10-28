@@ -26,7 +26,10 @@ public class TeleportWorldCommand implements CommandExecutor {
             return false;
         }
 
-        WorldUtils.TeleportPlayerToWorld((Player) sender, Bukkit.getWorld(worldName));
+        World world = Bukkit.getWorld(worldName);
+        assert world != null;
+
+        WorldUtils.TeleportPlayerToWorld((Player) sender, world);
 
         return true;
     }

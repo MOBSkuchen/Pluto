@@ -9,6 +9,10 @@ import java.util.Random;
 public class ServerPingListener implements Listener {
     String[] motds = {
             "Cooler Server",
+            "Hariz leckt eier",
+            "Jasper > Hariz",
+            "J + J",
+            "Leck eier"
     };
     @EventHandler
     public void onPing(ServerListPingEvent event) {

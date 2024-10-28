@@ -45,6 +45,7 @@ public class ProtectHubListener implements Listener {
     public void onChangeWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
+
         if (world.getName().equals(WorldUtils.hubWorld.getName())) {
             if (!player.isOp()) player.setAllowFlight(false);
             player.setGameMode(GameMode.CREATIVE);
@@ -53,10 +54,6 @@ public class ProtectHubListener implements Listener {
         if (player.getGameMode() == GameMode.CREATIVE) {
             player.playSound(player, Sound.BLOCK_ANVIL_PLACE, 1.0f, 1.0f);
         }
-
-        world.getPlayers().forEach(
-                p_ -> p_.sendMessage(ChatColor.GOLD.toString() +
-                ChatColor.BOLD + p_.getDisplayName() + ChatColor.RESET.toString() + ChatColor.GREEN + " ist der Welt beigreten!"));
     }
 
     @EventHandler

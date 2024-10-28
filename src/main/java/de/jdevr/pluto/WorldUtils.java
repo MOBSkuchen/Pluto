@@ -15,6 +15,9 @@ public class WorldUtils {
 
     public static void TeleportPlayerToWorld(Player player, World world) {
         player.teleport(world.getSpawnLocation());
+        world.getPlayers().forEach(
+                p_ -> p_.sendMessage(ChatColor.GOLD.toString() +
+                        ChatColor.BOLD + p_.getDisplayName() + ChatColor.RESET.toString() + ChatColor.GREEN + " ist der Welt beigreten!"));
     }
 
     public static void TeleportPlayerToWorld(Player player, String worldName) {TeleportPlayerToWorld(player, Bukkit.getWorld(worldName));}

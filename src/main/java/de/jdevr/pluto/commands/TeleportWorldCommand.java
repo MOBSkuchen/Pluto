@@ -4,7 +4,6 @@ import de.jdevr.pluto.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +14,7 @@ public class TeleportWorldCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Verwendung: /tpworld <name>");
+            sender.sendMessage(ChatColor.RED + "Verwendung: /tpworld <name> <spieler>");
             return false;
         }
 
@@ -29,7 +28,20 @@ public class TeleportWorldCommand implements CommandExecutor {
         World world = Bukkit.getWorld(worldName);
         assert world != null;
 
-        WorldUtils.TeleportPlayerToWorld((Player) sender, world);
+        Player target;
+
+        if (args.length > 1) {
+            var p = sender.getServer().getPlayer(args[1]);
+            if (p == null) {
+                sender.sendMessage(ChatColor.DARK_RED + "Ungültiger Welt name! Dieser Spieler existiert nicht auf dem Server!");
+                return false;
+            }
+            target = p;
+        } else {
+            target = (Player) sender;
+        }
+
+        WorldUtils.TeleportPlayerToWorld(target, world);
 
         return true;
     }

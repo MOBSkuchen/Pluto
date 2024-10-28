@@ -19,7 +19,7 @@ public final class Pluto extends JavaPlugin {
 
     {
         try {
-            signData = new DataStorageUtil("signData", this);
+            signData = new DataStorageUtil("interactData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

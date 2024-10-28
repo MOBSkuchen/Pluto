@@ -1,5 +1,6 @@
 package de.jdevr.pluto;
 
+import com.google.gson.Gson;
 import de.jdevr.pluto.commands.CreateWorldCommand;
 import de.jdevr.pluto.commands.DeleteWorldCommand;
 import de.jdevr.pluto.commands.TeleportWorldCommand;
@@ -8,12 +9,25 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public final class Pluto extends JavaPlugin {
+    Gson gson = new Gson();
+    private static Pluto plugin;
+    public static DataStorageUtil signData;
+
+    {
+        try {
+            signData = new DataStorageUtil("signData", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void onEnable() {
+        plugin = this;
         Logger logger = Bukkit.getLogger();
         logger.info("Starting up plugin");
         ListenerRegistration();
@@ -42,5 +56,13 @@ public final class Pluto extends JavaPlugin {
         getCommand("createworld").setExecutor(new CreateWorldCommand());
         getCommand("tpworld").setExecutor(new TeleportWorldCommand());
         getCommand("deleteworld").setExecutor(new DeleteWorldCommand());
+    }
+
+    public static Pluto getInstance() {
+        return plugin;
+    }
+
+    public static Logger myLogger() {
+        return plugin.getLogger();
     }
 }

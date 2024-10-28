@@ -23,6 +23,7 @@ public class InteractionEventListener implements Listener {
                             && (event.getClickedBlock().getY() == jsonObject.get("y").getAsInt())
                             && (event.getClickedBlock().getZ() == jsonObject.get("z").getAsInt())
                     ) {
+                        event.setCancelled(true);
                         var server = event.getPlayer().getServer();
                         server.dispatchCommand(server.getConsoleSender(), jsonObject.get("cmd").getAsString().replace("<player>", event.getPlayer().getName()));
                     }

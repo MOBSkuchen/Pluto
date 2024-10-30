@@ -14,7 +14,10 @@ public class WorldUtils {
     }
 
     public static void TeleportPlayerToWorld(Player player, World world) {
+        String title = world.getName();
+        title = title.substring(0, 1).toUpperCase() + title.substring(1);;
         player.teleport(world.getSpawnLocation());
+        player.sendTitle(title, null, 8, 40, 8);
         world.getPlayers().forEach(
                 p_ -> p_.sendMessage(ChatColor.GOLD.toString() +
                         ChatColor.BOLD + p_.getDisplayName() + ChatColor.RESET.toString() + ChatColor.GREEN + " ist der Welt beigreten!"));

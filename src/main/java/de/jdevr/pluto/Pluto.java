@@ -3,6 +3,7 @@ package de.jdevr.pluto;
 import com.google.gson.Gson;
 import de.jdevr.pluto.commands.CreateWorldCommand;
 import de.jdevr.pluto.commands.DeleteWorldCommand;
+import de.jdevr.pluto.commands.ListWorldsCommand;
 import de.jdevr.pluto.commands.TeleportWorldCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
@@ -56,6 +57,7 @@ public final class Pluto extends JavaPlugin {
         getCommand("createworld").setExecutor(new CreateWorldCommand());
         getCommand("tpworld").setExecutor(new TeleportWorldCommand());
         getCommand("deleteworld").setExecutor(new DeleteWorldCommand());
+        getCommand("listworlds").setExecutor(new ListWorldsCommand());
     }
 
     public static Pluto getInstance() {

@@ -12,6 +12,9 @@ commands:
   deleteworld:
     description: Löscht eine Welt
     permission: permissions.modworld
+  listworlds:
+    description: Zeigt alle Welten an
+    permission: permissions.listworlds
 permissions:
   permissions.modworld:
     description: Erlaubt das modifizieren von Welten

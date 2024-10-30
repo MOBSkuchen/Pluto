@@ -1,10 +1,8 @@
 package de.jdevr.pluto.listeners;
 
 import de.jdevr.pluto.WorldUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +11,9 @@ import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.Objects;
 
 public class ProtectHubListener implements Listener {
 
@@ -27,7 +28,7 @@ public class ProtectHubListener implements Listener {
 
     @EventHandler
     public void onCanBuild(BlockCanBuildEvent event) {
-        if (event.getPlayer().isOp()) return;
+        if (Objects.requireNonNull(event.getPlayer()).isOp()) return;
         if (event.getBlock().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
             event.setBuildable(false);
             event.getPlayer().sendMessage(ChatColor.RED + "Du kannst in dieser Welt nicht bauen!");
@@ -59,6 +60,15 @@ public class ProtectHubListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
         if (event.getDamager().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        World hubWorld = WorldUtils.hubWorld;
+        Block highestAt = hubWorld.getHighestBlockAt(Objects.requireNonNull(event.getTo()));
+        if (event.getPlayer().getWorld().getName().equals(hubWorld.getName()) && highestAt.getType().isAir()) {
             event.setCancelled(true);
         }
     }

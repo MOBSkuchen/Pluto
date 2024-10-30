@@ -59,6 +59,7 @@ public class ProtectHubListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
+        if (event.getDamager().isOp()) return;
         if (event.getDamager().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
             event.setCancelled(true);
         }
@@ -66,10 +67,12 @@ public class ProtectHubListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getPlayer().isOp()) return;
         World hubWorld = WorldUtils.hubWorld;
         Block highestAt = hubWorld.getHighestBlockAt(Objects.requireNonNull(event.getTo()));
         if (event.getPlayer().getWorld().getName().equals(hubWorld.getName()) && highestAt.getType().isAir()) {
             event.setCancelled(true);
+            event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
         }
     }
 }

@@ -8,12 +8,10 @@ import de.jdevr.pluto.commands.ListWorldsCommand;
 import de.jdevr.pluto.commands.TeleportWorldCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;

@@ -1,6 +1,7 @@
 package de.jdevr.pluto;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import de.jdevr.pluto.commands.CreateWorldCommand;
 import de.jdevr.pluto.commands.DeleteWorldCommand;
 import de.jdevr.pluto.commands.ListWorldsCommand;
@@ -12,6 +13,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public final class Pluto extends JavaPlugin {
@@ -19,10 +23,19 @@ public final class Pluto extends JavaPlugin {
     private static Pluto plugin;
     public static DataStorageUtil interactData;
     public static DataStorageUtil worldData;
+    public static DataStorageUtil motdData;
 
     {
         try {
             interactData = new DataStorageUtil("interactData.json", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    {
+        try {
+            motdData = new DataStorageUtil("motdData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,6 +55,15 @@ public final class Pluto extends JavaPlugin {
         Logger logger = Bukkit.getLogger();
         ListenerRegistration();
         CommandRegistration();
+        try {
+            List<String> motds = new ArrayList<>();
+            for (JsonElement jsonElement: motdData.getAsArray()) {
+                motds.add(jsonElement.getAsString());
+            }
+            ServerPingListener.motds = motds;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             WorldUtils.LoadAllWorlds();
             logger.info("Loaded all worlds ");

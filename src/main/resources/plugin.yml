@@ -1,7 +1,7 @@
 name: pluto
 version: '1.0'
 main: de.jdevr.pluto.Pluto
-api-version: '1.21'
+api-version: '1.21.1'
 commands:
   createworld:
     description: Erstellt eine neue Welt

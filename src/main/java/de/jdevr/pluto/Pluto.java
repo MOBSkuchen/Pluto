@@ -7,6 +7,7 @@ import de.jdevr.pluto.commands.ListWorldsCommand;
 import de.jdevr.pluto.commands.TeleportWorldCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,11 +17,20 @@ import java.util.logging.Logger;
 public final class Pluto extends JavaPlugin {
     Gson gson = new Gson();
     private static Pluto plugin;
-    public static DataStorageUtil signData;
+    public static DataStorageUtil interactData;
+    public static DataStorageUtil worldData;
 
     {
         try {
-            signData = new DataStorageUtil("interactData.json", this);
+            interactData = new DataStorageUtil("interactData.json", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    {
+        try {
+            worldData = new DataStorageUtil("worldData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -30,10 +40,14 @@ public final class Pluto extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         Logger logger = Bukkit.getLogger();
-        logger.info("Starting up plugin");
         ListenerRegistration();
         CommandRegistration();
-        logger.info("Start up done");
+        try {
+            WorldUtils.LoadAllWorlds();
+            logger.info("Loaded all worlds ");
+        } catch (IOException e) {
+            logger.info("Failed to load worlds!");
+        }
     }
 
     @Override

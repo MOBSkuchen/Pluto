@@ -17,7 +17,7 @@ public class InteractionEventListener implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getClickedBlock().getState() instanceof Sign) {
                 JsonObject jsonObject;
-                for (JsonElement jsonElement : Pluto.signData.getAsArray().asList()) {
+                for (JsonElement jsonElement : Pluto.interactData.getAsArray().asList()) {
                     jsonObject = jsonElement.getAsJsonObject();
                     if ((event.getClickedBlock().getX() == jsonObject.get("x").getAsInt())
                             && (event.getClickedBlock().getY() == jsonObject.get("y").getAsInt())

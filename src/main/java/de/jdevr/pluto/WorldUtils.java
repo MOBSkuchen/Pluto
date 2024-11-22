@@ -1,9 +1,13 @@
 package de.jdevr.pluto;
 
+import com.google.gson.JsonArray;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldUtils {
     public static World hubWorld = getHubWorld();
@@ -57,5 +61,22 @@ public class WorldUtils {
         Bukkit.unloadWorld(Bukkit.getWorld(worldName), false);
 
         folder.delete();
+    }
+
+    public static List<String> ListWorlds() throws IOException {
+        ArrayList<String> worldNames = new ArrayList<>();
+        JsonArray worlds = Pluto.worldData.getAsArray();
+        for (var world : worlds) {
+            worldNames.add(world.getAsJsonObject().get("name").getAsString());
+        }
+        return worldNames;
+    }
+
+    public static void LoadAllWorlds() throws IOException {
+        for (String worldName : ListWorlds()) {
+            if (Bukkit.getWorld(worldName) == null){
+                new WorldCreator(worldName).createWorld();
+            }
+        }
     }
 }

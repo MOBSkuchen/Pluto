@@ -2,12 +2,12 @@ package de.jdevr.pluto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import de.jdevr.pluto.commands.CreateWorldCommand;
-import de.jdevr.pluto.commands.DeleteWorldCommand;
-import de.jdevr.pluto.commands.ListWorldsCommand;
-import de.jdevr.pluto.commands.TeleportWorldCommand;
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MVWorldManager;
+import de.jdevr.pluto.commands.HubCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,10 +17,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public final class Pluto extends JavaPlugin {
-    Gson gson = new Gson();
+    public static Gson gson = new Gson();
     private static Pluto plugin;
     public static DataStorageUtil interactData;
-    public static DataStorageUtil worldData;
     public static DataStorageUtil motdData;
 
     {
@@ -34,14 +33,6 @@ public final class Pluto extends JavaPlugin {
     {
         try {
             motdData = new DataStorageUtil("motdData.json", this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    {
-        try {
-            worldData = new DataStorageUtil("worldData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,12 +53,6 @@ public final class Pluto extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            WorldUtils.LoadAllWorlds();
-            logger.info("Loaded all worlds ");
-        } catch (IOException e) {
-            logger.info("Failed to load worlds!");
-        }
     }
 
     @Override
@@ -87,12 +72,19 @@ public final class Pluto extends JavaPlugin {
         pluginManager.registerEvents(new InteractionEventListener(), this);
     }
 
-    private void CommandRegistration() {
-        getCommand("createworld").setExecutor(new CreateWorldCommand());
-        getCommand("tpworld").setExecutor(new TeleportWorldCommand());
-        getCommand("deleteworld").setExecutor(new DeleteWorldCommand());
-        getCommand("listworlds").setExecutor(new ListWorldsCommand());
+    private void RegisterCommand(CommandExecutor executor, String usage) {
+        var hubCommand = getCommand("hub");
+        assert hubCommand != null;
+        hubCommand.setUsage(usage);
+        hubCommand.setExecutor(executor);
     }
+
+    private void CommandRegistration() {
+        RegisterCommand(new HubCommand(), "/hub");
+    }
+
+    public static MultiverseCore MultiverseCore = JavaPlugin.getPlugin(MultiverseCore.class);
+    public static MVWorldManager worldManager = MultiverseCore.getMVWorldManager();
 
     public static Pluto getInstance() {
         return plugin;

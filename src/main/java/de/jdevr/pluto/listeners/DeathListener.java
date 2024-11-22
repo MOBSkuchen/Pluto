@@ -17,7 +17,7 @@ public class DeathListener implements Listener {
         } else {
             cause = "skill issues";
         }
-        event.setDeathMessage(ChatColor.RED + event.getEntity().getDisplayName() + ChatColor.WHITE + " leckt einer wegen " + ChatColor.GOLD + cause);
+        event.setDeathMessage(ChatColor.RED + event.getEntity().getDisplayName() + ChatColor.WHITE + " leckt eier wegen " + ChatColor.GOLD + cause);
     }
 
     @EventHandler

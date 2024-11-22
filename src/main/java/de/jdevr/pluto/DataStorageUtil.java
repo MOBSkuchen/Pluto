@@ -39,9 +39,11 @@ public class DataStorageUtil {
         return getAsObject().get(key);
     }
 
-    public void add(String key, JsonElement jsE) throws IOException {
+    public void add(String key, JsonObject jsE) throws IOException {
         JsonObject jsonObject = getAsObject();
         jsonObject.add(key, jsE);
-        NewWriter().write(Pluto.getInstance().gson.toJson(jsonObject));
+        var writer = NewWriter();
+        writer.write(Pluto.gson.toJson(jsonObject));
+        writer.flush();
     }
 }

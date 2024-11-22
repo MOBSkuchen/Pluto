@@ -2,19 +2,12 @@ name: pluto
 version: '1.0'
 main: de.jdevr.pluto.Pluto
 api-version: '1.21.1'
+depend:
+  - Multiverse-Core
+  - Multiverse-Inventories
 commands:
-  createworld:
-    description: Erstellt eine neue Welt
-    permission: permissions.modworlds
-  tpworld:
-    description: Teleportiert den Spieler auf eine Welt
-    permission: permissions.tpworld
-  deleteworld:
-    description: Löscht eine Welt
-    permission: permissions.modworld
-  listworlds:
-    description: Zeigt alle Welten an
-    permission: permissions.listworlds
+  hub:
+    description: "Bringt dich zum hub!"
 permissions:
   permissions.modworld:
     description: Erlaubt das modifizieren von Welten

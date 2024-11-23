@@ -4,18 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
-import com.onarandombox.multiverseinventories.InventoriesListener;
 import de.jdevr.pluto.commands.HubCommand;
 import de.jdevr.pluto.commands.MenuCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,7 @@ public final class Pluto extends JavaPlugin {
     public static DataStorageUtil interactData;
     public static DataStorageUtil guiData;
     public static DataStorageUtil motdData;
+    public static DataStorageUtil serverConfigData;
 
     {
         try {
@@ -47,6 +45,14 @@ public final class Pluto extends JavaPlugin {
     {
         try {
             motdData = new DataStorageUtil("motdData.json", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    {
+        try {
+            serverConfigData = new DataStorageUtil("serverConfigData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -10,12 +10,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class InteractionEventListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) throws IOException {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getClickedBlock().getState() instanceof Sign) {
+            if (Objects.requireNonNull(event.getClickedBlock()).getState() instanceof Sign) {
                 JsonObject jsonObject;
                 for (JsonElement jsonElement : Pluto.interactData.getAsArray().asList()) {
                     jsonObject = jsonElement.getAsJsonObject();

@@ -19,9 +19,4 @@ public class DeathListener implements Listener {
         }
         event.setDeathMessage(ChatColor.RED + event.getEntity().getDisplayName() + ChatColor.WHITE + " leckt eier wegen " + ChatColor.GOLD + cause);
     }
-
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent event) {
-        event.setRespawnLocation(Objects.requireNonNull(Objects.requireNonNull(event.getPlayer().getLastDeathLocation()).getWorld()).getSpawnLocation());
-    }
 }

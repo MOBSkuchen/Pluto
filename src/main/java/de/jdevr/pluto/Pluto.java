@@ -4,13 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
+import com.onarandombox.multiverseinventories.InventoriesListener;
 import de.jdevr.pluto.commands.HubCommand;
+import de.jdevr.pluto.commands.MenuCommand;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +25,20 @@ public final class Pluto extends JavaPlugin {
     public static Gson gson = new Gson();
     private static Pluto plugin;
     public static DataStorageUtil interactData;
+    public static DataStorageUtil guiData;
     public static DataStorageUtil motdData;
 
     {
         try {
             interactData = new DataStorageUtil("interactData.json", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    {
+        try {
+            guiData = new DataStorageUtil("guiData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,17 +84,19 @@ public final class Pluto extends JavaPlugin {
         pluginManager.registerEvents(new ServerPingListener(), this);
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new InteractionEventListener(), this);
+        pluginManager.registerEvents(new GuiListener(), this);
     }
 
-    private void RegisterCommand(CommandExecutor executor, String usage) {
-        var hubCommand = getCommand("hub");
+    private void RegisterCommand(CommandExecutor executor, String name, String usage) {
+        var hubCommand = getCommand(name);
         assert hubCommand != null;
         hubCommand.setUsage(usage);
         hubCommand.setExecutor(executor);
     }
 
     private void CommandRegistration() {
-        RegisterCommand(new HubCommand(), "/hub");
+        RegisterCommand(new HubCommand(), "hub", "/hub");
+        RegisterCommand(new MenuCommand(), "menu", "/menu");
     }
 
     public static MultiverseCore MultiverseCore = JavaPlugin.getPlugin(MultiverseCore.class);
@@ -92,5 +108,9 @@ public final class Pluto extends JavaPlugin {
 
     public static Logger myLogger() {
         return plugin.getLogger();
+    }
+
+    public static NamespacedKey getNsKey(String key) {
+        return new NamespacedKey(Pluto.getInstance(), key);
     }
 }

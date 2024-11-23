@@ -11,8 +11,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class HubCommand implements CommandExecutor {
+    public static String name = "hub";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Nur Spieler können diesen Befehl verwenden.");
+            return false;
+        }
         var hubWorld = Pluto.worldManager.getMVWorld("hub");
         DestinationFactory df = Pluto.MultiverseCore.getDestFactory();
         MVDestination d = df.getDestination(hubWorld.getName());

@@ -8,6 +8,8 @@ depend:
 commands:
   hub:
     description: "Bringt dich zum hub!"
+  menu:
+    description: "Öffnet das Menü!"
 permissions:
   permissions.modworld:
     description: Erlaubt das modifizieren von Welten

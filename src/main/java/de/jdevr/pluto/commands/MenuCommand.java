@@ -13,12 +13,11 @@ public class MenuCommand implements CommandExecutor {
     public static String name = "hub";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Nur Spieler können diesen Befehl verwenden.");
             return false;
         }
 
-        Player player = (Player) sender;
         CustomInventory inv = null;
         try {
             inv = CustomInventory.CreateMenu(player);

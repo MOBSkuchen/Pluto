@@ -10,6 +10,14 @@ commands:
     description: "Bringt dich zum hub!"
   menu:
     description: "Öffnet das Menü!"
+  marker:
+    description: "Plaziert einen Marker"
+  placewalk:
+    description: "Plaziert einen bestimmten block unter dir!"
+  autofill:
+    description: "Fülle ein gebiet"
+  lastdeath:
+    description: "Letzter Tod"
 permissions:
   permissions.modworld:
     description: Erlaubt das modifizieren von Welten

@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
-import de.jdevr.pluto.commands.HubCommand;
-import de.jdevr.pluto.commands.MenuCommand;
+import de.jdevr.pluto.commands.*;
 import de.jdevr.pluto.listeners.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
@@ -25,6 +25,7 @@ public final class Pluto extends JavaPlugin {
     public static DataStorageUtil guiData;
     public static DataStorageUtil motdData;
     public static DataStorageUtil serverConfigData;
+    public static DataStorageUtil playerPlaceWalkData;
 
     {
         try {
@@ -53,6 +54,14 @@ public final class Pluto extends JavaPlugin {
     {
         try {
             serverConfigData = new DataStorageUtil("serverConfigData.json", this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    {
+        try {
+            playerPlaceWalkData = new DataStorageUtil("playerPlaceWalkData.json", this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -103,6 +112,10 @@ public final class Pluto extends JavaPlugin {
     private void CommandRegistration() {
         RegisterCommand(new HubCommand(), "hub", "/hub");
         RegisterCommand(new MenuCommand(), "menu", "/menu");
+        RegisterCommand(new MarkerCommand(), "marker", "/marker");
+        RegisterCommand(new PlaceWalkCommand(), "placewalk", "/placewalk");
+        RegisterCommand(new FillCommand(), "autofill", "/autofill");
+        RegisterCommand(new LastDeathCommand(), "lastdeath", "/lastdeath");
     }
 
     public static MultiverseCore MultiverseCore = JavaPlugin.getPlugin(MultiverseCore.class);

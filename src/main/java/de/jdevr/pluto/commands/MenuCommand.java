@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public class MenuCommand implements CommandExecutor {
-    public static String name = "hub";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player player)) {

@@ -1,8 +1,10 @@
 package de.jdevr.pluto.listeners;
 
+import de.jdevr.pluto.Pluto;
 import de.jdevr.pluto.WorldUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +14,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class ProtectHubListener implements Listener {
@@ -32,13 +37,6 @@ public class ProtectHubListener implements Listener {
         if (event.getBlock().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
             event.setBuildable(false);
             event.getPlayer().sendMessage(ChatColor.RED + "Du kannst in dieser Welt nicht bauen!");
-        }
-    }
-
-    @EventHandler
-    public void onSpawn(EntitySpawnEvent event) {
-        if (event.getEntity().getWorld().getName().equals(WorldUtils.hubWorld.getName()) && !(event.getEntity() instanceof Player)) {
-            event.setCancelled(true);
         }
     }
 
@@ -66,13 +64,25 @@ public class ProtectHubListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.getPlayer().isOp()) return;
+    public void onPlayerMove(PlayerMoveEvent event) throws IOException {
+        Player player = event.getPlayer();
         World hubWorld = WorldUtils.hubWorld;
-        Block highestAt = hubWorld.getHighestBlockAt(Objects.requireNonNull(event.getTo()));
-        if (event.getPlayer().getWorld().getName().equals(hubWorld.getName()) && highestAt.getType().isAir()) {
+        if (!player.isOp() && player.getWorld().getName().equals(hubWorld.getName()) && hubWorld.getHighestBlockAt(Objects.requireNonNull(event.getTo())).getType().isAir()) {
             event.setCancelled(true);
-            event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+            player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+        }
+
+        if (Pluto.playerPlaceWalkData.hasKey(player.getName())) {
+            Inventory playerInventory = player.getInventory();
+            Material material = Objects.requireNonNull(Material.getMaterial(Pluto.playerPlaceWalkData.getKeyAsString(player.getName())));
+            var item = new ItemStack(material, 1);
+            if (playerInventory.contains(material)) {
+                var block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
+                if (!block.getType().isSolid()) {
+                    block.setType(material);
+                    playerInventory.removeItem(item);
+                }
+            }
         }
     }
 }

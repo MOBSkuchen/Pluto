@@ -112,9 +112,9 @@ public final class Pluto extends JavaPlugin {
     private void CommandRegistration() {
         RegisterCommand(new MenuCommand(), "menu", "/menu");
         RegisterCommand(new MarkerCommand(), "marker", "/marker");
-        RegisterCommand(new PlaceWalkCommand(), "placewalk", "/placewalk");
-        RegisterCommand(new FillCommand(), "autofill", "/autofill");
-        RegisterCommand(new LastDeathCommand(), "lastdeath", "/lastdeath");
+        RegisterCommand(new PlaceWalkCommand(), "placewalk", "/placewalk <BLOCK TYP>");
+        RegisterCommand(new FillCommand(), "autofill", "/autofill <BLOCK TYP>");
+        RegisterCommand(new LastDeathCommand(), "lastdeath", "/lastdeath (SPIELER NAME [optional])");
     }
 
     public static MultiverseCore MultiverseCore = JavaPlugin.getPlugin(MultiverseCore.class);

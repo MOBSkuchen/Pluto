@@ -20,6 +20,7 @@ public class PlaceWalkCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
+        if (args.length < 1) return false;
         try {
             if (Pluto.playerPlaceWalkData.hasKey(player.getName())) {
                 var obj = Pluto.playerPlaceWalkData.getAsObject();

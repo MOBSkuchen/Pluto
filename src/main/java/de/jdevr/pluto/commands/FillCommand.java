@@ -27,6 +27,7 @@ public class FillCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
+        if (args.length < 1) return false;
         Inventory playerInventory = player.getInventory();
         Material material = Material.getMaterial(args[0]);
         assert material != null;

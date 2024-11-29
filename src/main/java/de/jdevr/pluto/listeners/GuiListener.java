@@ -11,12 +11,11 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class GuiListener implements Listener {
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) throws IOException {
+    public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Server server = player.getServer();
         if (player.hasMetadata("opened_menu")) {

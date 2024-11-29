@@ -110,7 +110,6 @@ public final class Pluto extends JavaPlugin {
     }
 
     private void CommandRegistration() {
-        RegisterCommand(new HubCommand(), "hub", "/hub");
         RegisterCommand(new MenuCommand(), "menu", "/menu");
         RegisterCommand(new MarkerCommand(), "marker", "/marker");
         RegisterCommand(new PlaceWalkCommand(), "placewalk", "/placewalk");

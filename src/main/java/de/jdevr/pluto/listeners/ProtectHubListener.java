@@ -3,7 +3,6 @@ package de.jdevr.pluto.listeners;
 import de.jdevr.pluto.Pluto;
 import de.jdevr.pluto.WorldUtils;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,8 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -41,18 +40,25 @@ public class ProtectHubListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        if (event.getPlayer().getWorld().getName().equals(WorldUtils.hubWorld.getName())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onChangeWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
 
         if (world.getName().equals(WorldUtils.hubWorld.getName())) {
             if (!player.isOp()) player.setAllowFlight(false);
-            player.setGameMode(GameMode.CREATIVE);
+            player.setGameMode(GameMode.ADVENTURE);
         }
 
-        if (player.getGameMode() == GameMode.CREATIVE) {
-            player.playSound(player, Sound.BLOCK_ANVIL_PLACE, 1.0f, 1.0f);
-        }
+        world.getPlayers().forEach(
+                p_ -> p_.sendMessage(ChatColor.GOLD.toString() +
+                        ChatColor.BOLD + player.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " ist der Welt beigreten!"));
     }
 
     @EventHandler

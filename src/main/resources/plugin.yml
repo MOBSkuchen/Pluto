@@ -1,13 +1,11 @@
 name: pluto
-version: '1.0'
+version: '1.5'
 main: de.jdevr.pluto.Pluto
-api-version: '1.21.1'
+api-version: '1.21.3'
 depend:
   - Multiverse-Core
   - Multiverse-Inventories
 commands:
-  hub:
-    description: "Bringt dich zum hub!"
   menu:
     description: "Öffnet das Menü!"
   marker:

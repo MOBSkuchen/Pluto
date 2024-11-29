@@ -18,6 +18,7 @@ public class InteractionEventListener implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (Objects.requireNonNull(event.getClickedBlock()).getState() instanceof Sign) {
                 JsonObject jsonObject;
+                Pluto.myLogger().info(event.getClickedBlock().getX() + " " + event.getClickedBlock().getY() + " " + event.getClickedBlock().getZ());
                 for (JsonElement jsonElement : Pluto.interactData.getAsArray().asList()) {
                     jsonObject = jsonElement.getAsJsonObject();
                     if ((event.getClickedBlock().getX() == jsonObject.get("x").getAsInt())
@@ -25,8 +26,7 @@ public class InteractionEventListener implements Listener {
                             && (event.getClickedBlock().getZ() == jsonObject.get("z").getAsInt())
                     ) {
                         event.setCancelled(true);
-                        var server = event.getPlayer().getServer();
-                        server.dispatchCommand(server.getConsoleSender(), jsonObject.get("cmd").getAsString().replace("<player>", event.getPlayer().getName()));
+                        event.getPlayer().performCommand(jsonObject.get("cmd").getAsString());
                     }
                 }
             }

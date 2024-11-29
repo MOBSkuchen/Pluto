@@ -27,7 +27,7 @@ public class MarkerCommand implements CommandExecutor {
 
         ItemDisplay itemDisplay = CustomDisplay.CreateItemDisplay(loc, CustomInventory.CreateItem(Material.TORCH, "TORCH", "", 1));
         itemDisplay = (ItemDisplay) CustomDisplay.ApplyTransform(itemDisplay, 20D,
-                null, 0.1F, 10F, 0F, null,
+                null, 2F, 10F, 0F, null,
                 null, null);
 
         ScheduleKill(itemDisplay);
